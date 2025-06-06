@@ -31,7 +31,7 @@ targets:
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - Modules/Domain/
+      - path: Modules/Domain/
     settings:
       PRODUCT_NAME: "Domain"
       SWIFT_VERSION: "5.0"
@@ -42,7 +42,7 @@ targets:
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - Modules/Persistence/
+      - path: Modules/Persistence/
     dependencies:
       - target: Domain
     settings:
@@ -55,7 +55,7 @@ targets:
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - Modules/Networking/
+      - path: Modules/Networking/
     dependencies:
       - target: Domain
     settings:
@@ -68,7 +68,7 @@ targets:
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - Modules/UseCases/
+      - path: Modules/UseCases/
     dependencies:
       - target: Domain
       - target: Persistence
@@ -83,7 +83,7 @@ targets:
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - Modules/Common/
+      - path: Modules/Common/
     dependencies:
       - target: Domain
     settings:
@@ -96,8 +96,8 @@ targets:
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - Modules/UI/AccountsUI/
-    group: UI
+      - path: Modules/UI/AccountsUI/
+        group: UI
     resources:
       - Modules/UI/AppEntry/Resources/**
     dependencies:
@@ -114,8 +114,8 @@ targets:
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - Modules/UI/AnalysisUI/
-    group: UI
+      - path: Modules/UI/AnalysisUI/
+        group: UI
     resources:
       - Modules/UI/AppEntry/Resources/**
     dependencies:
@@ -132,8 +132,8 @@ targets:
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - Modules/UI/CategoriesUI/
-    group: UI
+      - path: Modules/UI/CategoriesUI/
+        group: UI
     resources:
       - Modules/UI/AppEntry/Resources/**
     dependencies:
@@ -150,8 +150,8 @@ targets:
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - Modules/UI/SettingsUI/
-    group: UI
+      - path: Modules/UI/SettingsUI/
+        group: UI
     resources:
       - Modules/UI/AppEntry/Resources/**
     dependencies:
@@ -166,7 +166,8 @@ targets:
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - Modules/UI/TransactionsUI/
+      - path: Modules/UI/TransactionsUI/
+        group: UI
     group: UI
     resources:
       - Modules/UI/AppEntry/Resources/**
@@ -185,7 +186,8 @@ targets:
     deploymentTarget: "18.0"
     bundleId: KV.Lyashenko.SpendWise.SpendWise
     sources:
-      - Modules/UI/AppEntry/
+      - path: Modules/UI/AppEntry/
+        group: UI
     excludes:
           - Supporting Modules/UI/AppEntry/Info.plist
     resources:

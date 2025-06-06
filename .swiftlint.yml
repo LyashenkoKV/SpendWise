@@ -1,0 +1,40 @@
+disabled_rules:
+  - trailing_whitespace
+  - line_length
+
+line_length: 120
+
+included:
+  - Modules/Domain
+  - Modules/Persistence
+  - Modules/Networking
+  - Modules/UseCases
+  - Modules/UI
+  - Modules/Common
+
+excluded:
+  - Pods
+  - Generated
+  - Scripts
+
+opt_in_rules:
+  - empty_count
+  - explicit_init
+  - force_unwrapping
+  - implicit_return
+  - unused_import
+  - redundant_optional_initialization
+
+force_unwrapping: error
+
+identifier_name:
+  min_length:
+    error: 3
+    warning: 2
+  excluded:
+    - id
+    - OK
+    - URL
+
+type_name:
+  min_length: 3

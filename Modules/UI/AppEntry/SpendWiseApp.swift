@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import TransactionsUI
 
 @main
 struct SpendWiseApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TransactionUI()
         }
     }
 }

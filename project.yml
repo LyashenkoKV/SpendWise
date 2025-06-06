@@ -1,0 +1,222 @@
+name: SpendWise
+
+options:
+  bundleIdPrefix: KV.Lyashenko.SpendWise
+  deploymentTarget:
+    iOS:
+      target: "18.0"
+      devices: [iphone, ipad]
+
+configs:
+  Debug: debug
+  Release: release
+
+settings:
+  base:
+    CODE_SIGN_STYLE: Automatic
+
+files:
+  - Modules/Domain/**
+  - Modules/Persistence/**
+  - Modules/Networking/**
+  - Modules/UseCases/**
+  - Modules/UI/**
+  - Modules/Common/**
+  - project.yml
+  - .swiftlint.yml
+
+targets:
+  Domain:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - Modules/Domain/
+    settings:
+      PRODUCT_NAME: "Domain"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  Persistence:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - Modules/Persistence/
+    dependencies:
+      - target: Domain
+    settings:
+      PRODUCT_NAME: "Persistence"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  Networking:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - Modules/Networking/
+    dependencies:
+      - target: Domain
+    settings:
+      PRODUCT_NAME: "Networking"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  UseCases:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - Modules/UseCases/
+    dependencies:
+      - target: Domain
+      - target: Persistence
+      - target: Networking
+    settings:
+      PRODUCT_NAME: "UseCases"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  Common:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - Modules/Common/
+    dependencies:
+      - target: Domain
+    settings:
+      PRODUCT_NAME: "Common"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  AccountsUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - Modules/UI/AccountsUI/
+    group: UI
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Domain
+      - target: UseCases
+      - target: Common
+    settings:
+      PRODUCT_NAME: "AccountsUI"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  AnalysisUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - Modules/UI/AnalysisUI/
+    group: UI
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Domain
+      - target: UseCases
+      - target: Common
+    settings:
+      PRODUCT_NAME: "AnalysisUI"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  CategoriesUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - Modules/UI/CategoriesUI/
+    group: UI
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Domain
+      - target: UseCases
+      - target: Common
+    settings:
+      PRODUCT_NAME: "CategoriesUI"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  SettingsUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - Modules/UI/SettingsUI/
+    group: UI
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Common
+    settings:
+      PRODUCT_NAME: "SettingsUI"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  TransactionsUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - Modules/UI/TransactionsUI/
+    group: UI
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Domain
+      - target: UseCases
+      - target: Common
+    settings:
+      PRODUCT_NAME: "TransactionsUI"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  SpendWise:
+    type: application
+    platform: iOS
+    deploymentTarget: "18.0"
+    bundleId: KV.Lyashenko.SpendWise.SpendWise
+    sources:
+      - Modules/UI/AppEntry/
+    excludes:
+          - Supporting Modules/UI/AppEntry/Info.plist
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Common
+      - target: Domain
+      - target: Persistence
+      - target: Networking
+      - target: UseCases
+      - target: TransactionsUI
+      - target: AccountsUI
+      - target: CategoriesUI
+      - target: SettingsUI
+      - target: AnalysisUI
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: 'KV.Lyashenko.SpendWise'
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+      UISupportedInterfaceOrientations:
+        - UIInterfaceOrientationPortrait
+    prebuildScripts:
+      - name: SwiftLint
+        script: |
+          if which swiftlint >/dev/null; then
+            swiftlint lint --config "${SRCROOT}/.swiftlint.yml"
+          else
+            echo "warning: SwiftLint not installed"
+          fi
+
+schemes:
+  SpendWiseApp:
+    build:
+      targets:
+        SpendWise: all

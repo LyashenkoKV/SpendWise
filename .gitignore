@@ -1,0 +1,38 @@
+# Xcode build artifacts & user settings
+DerivedData/
+*.xcuserstate
+*.xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+*.xcdebugger
+
+# Xcode project/workspace structure
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# Swift Package Manager
+/.swiftpm/
+/.build/
+
+# SwiftLint
+.swiftlint-cache
+
+# XcodeGen (ты не должен коммитить сгенерированный проект)
+*.xcodeproj
+*.xcworkspace
+
+# Coverage
+*.gcno
+
+# User-specific and system files
+*.swp
+*.swo
+*.DS_Store
+
+# Local environment
+.env

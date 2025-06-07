@@ -9,7 +9,7 @@ import Foundation
 import Domain
 import Common
 
-public final class BankAccountsServiceMock {
+public actor BankAccountsServiceMock {
     public init() {}
 
     public func getMockSingleBankAccount() async throws -> BankAccount {

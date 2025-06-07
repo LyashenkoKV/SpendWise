@@ -31,7 +31,7 @@ public extension Transaction {
             Logger.shared.log(
                 .error,
                 message: "Ошибка при парсинге JSON в Transaction",
-                metadata: ["❌" : "Transaction"]
+                metadata: ["❌": "Transaction"]
             )
             return nil
         }
@@ -45,7 +45,7 @@ public extension Transaction {
             Logger.shared.log(
                 .error,
                 message: "Ошибка при преобразовании Transaction в JSON",
-                metadata: ["❌" : "Transaction"]
+                metadata: ["❌": "Transaction"]
             )
             return nil
         }

@@ -7,10 +7,19 @@
 
 import Foundation
 
-public enum GlobalConstants: String {
+public enum GlobalConstants {
 
     // Logger
 
-    case logSubsystem = "KV.Lyashenko.SpendWise"
-    case logCategory = "account"
+    public static let logSubsystem = "KV.Lyashenko.SpendWise"
+    public static let logCategory = "account"
+
+    // Currency
+
+    public static let currencyRUB = "RUB"
+    public static let currencyEUR = "EUR"
+    public static let currencyUSD = "USD"
+    public static let symbolRUB = "₽"
+    public static let symbolUSD = "$"
+    public static let symbolEUR = "€"
 }

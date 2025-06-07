@@ -32,6 +32,8 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/Domain/
+    dependencies:
+      - target: Common
     settings:
       PRODUCT_NAME: "Domain"
       SWIFT_VERSION: "5.0"
@@ -45,6 +47,7 @@ targets:
       - path: Modules/Persistence/
     dependencies:
       - target: Domain
+      - target: Common
     settings:
       PRODUCT_NAME: "Persistence"
       SWIFT_VERSION: "5.0"
@@ -58,6 +61,7 @@ targets:
       - path: Modules/Networking/
     dependencies:
       - target: Domain
+      - target: Common
     settings:
       PRODUCT_NAME: "Networking"
       SWIFT_VERSION: "5.0"
@@ -73,6 +77,7 @@ targets:
       - target: Domain
       - target: Persistence
       - target: Networking
+      - target: Common
     settings:
       PRODUCT_NAME: "UseCases"
       SWIFT_VERSION: "5.0"
@@ -84,8 +89,6 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/Common/
-    dependencies:
-      - target: Domain
     settings:
       PRODUCT_NAME: "Common"
       SWIFT_VERSION: "5.0"

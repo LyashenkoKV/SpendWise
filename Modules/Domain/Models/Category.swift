@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Common
 
 public enum Direction: String, Codable {
     case income
@@ -20,7 +21,12 @@ public struct Category: Identifiable, Codable {
 
     public var direction: Direction { isIncome ? .income : .outcome }
 
-    public init(id: Int, name: String, emoji: Character, isIncome: Bool) {
+    public init(
+        id: Int,
+        name: String,
+        emoji: Character,
+        isIncome: Bool
+    ) {
         self.id = id
         self.name = name
         self.emoji = emoji

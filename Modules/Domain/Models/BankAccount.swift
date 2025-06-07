@@ -15,4 +15,22 @@ public struct BankAccount: Identifiable, Codable, Hashable {
     public let currency: String
     public let createdAt: Date?
     public let updateAt: Date?
+
+    public init(
+        id: Int,
+        userId: Int?,
+        name: String,
+        balance: Decimal,
+        currency: String,
+        createdAt: Date?,
+        updateAt: Date?
+    ) {
+        self.id = id
+        self.userId = userId
+        self.name = name
+        self.balance = balance
+        self.currency = currency
+        self.createdAt = createdAt
+        self.updateAt = updateAt
+    }
 }

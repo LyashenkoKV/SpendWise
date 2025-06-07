@@ -13,7 +13,7 @@ public enum Direction: String, Codable {
     case outcome
 }
 
-public struct Category: Identifiable, Codable {
+public struct ExpensesCategory: Identifiable, Codable {
     public let id: Int
     public let name: String
     public let emoji: Character

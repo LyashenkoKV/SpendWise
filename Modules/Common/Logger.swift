@@ -15,8 +15,8 @@ public final class Logger {
 
     private init() {
         logger = OSLog(
-            subsystem: GlobalConstants.logSubsystem.rawValue,
-            category: GlobalConstants.logCategory.rawValue
+            subsystem: GlobalConstants.logSubsystem,
+            category: GlobalConstants.logCategory
         )
     }
 

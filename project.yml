@@ -16,12 +16,8 @@ settings:
     CODE_SIGN_STYLE: Automatic
 
 files:
-  - Modules/Domain/**
-  - Modules/Persistence/**
-  - Modules/Networking/**
-  - Modules/UseCases/**
-  - Modules/UI/**
-  - Modules/Common/**
+  - path: Modules/
+    group: Modules
   - project.yml
   - .swiftlint.yml
 
@@ -32,6 +28,7 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/Domain/
+        group: Modules
     dependencies:
       - target: Common
     settings:
@@ -39,12 +36,28 @@ targets:
       SWIFT_VERSION: "5.0"
       INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
 
+  DomainTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Tests/DomainTests/
+        group: Tests
+    dependencies:
+      - target: Domain
+    settings:
+      PRODUCT_NAME: "DomainTests"
+      PRODUCT_BUNDLE_IDENTIFIER: ${bundleIdPrefix}.DomainTests
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: "Tests/TestBundle-Info.plist"
+
   Persistence:
     type: framework
     platform: iOS
     deploymentTarget: "18.0"
     sources:
       - path: Modules/Persistence/
+        group: Modules
     dependencies:
       - target: Domain
       - target: Common
@@ -59,6 +72,7 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/Networking/
+        group: Modules
     dependencies:
       - target: Domain
       - target: Common
@@ -73,6 +87,7 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/UseCases/
+        group: Modules
     dependencies:
       - target: Domain
       - target: Persistence
@@ -89,6 +104,7 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/Common/
+        group: Modules
     settings:
       PRODUCT_NAME: "Common"
       SWIFT_VERSION: "5.0"
@@ -100,7 +116,7 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/UI/AccountsUI/
-        group: UI
+        group: Modules/UI
     resources:
       - Modules/UI/AppEntry/Resources/**
     dependencies:
@@ -118,7 +134,7 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/UI/AnalysisUI/
-        group: UI
+        group: Modules/UI
     resources:
       - Modules/UI/AppEntry/Resources/**
     dependencies:
@@ -136,7 +152,7 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/UI/CategoriesUI/
-        group: UI
+        group: Modules/UI
     resources:
       - Modules/UI/AppEntry/Resources/**
     dependencies:
@@ -154,7 +170,7 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/UI/SettingsUI/
-        group: UI
+        group: Modules/UI
     resources:
       - Modules/UI/AppEntry/Resources/**
     dependencies:
@@ -170,7 +186,7 @@ targets:
     deploymentTarget: "18.0"
     sources:
       - path: Modules/UI/TransactionsUI/
-        group: UI
+        group: Modules/UI
     group: UI
     resources:
       - Modules/UI/AppEntry/Resources/**
@@ -209,6 +225,8 @@ targets:
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: 'KV.Lyashenko.SpendWise'
       INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+      PRODUCT_BUNDLE_IDENTIFIER: ${bundleIdPrefix}.SpendWise
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
       UISupportedInterfaceOrientations:
         - UIInterfaceOrientationPortrait
     prebuildScripts:
@@ -225,3 +243,11 @@ schemes:
     build:
       targets:
         SpendWise: all
+  Domain:
+    build:
+      targets:
+        Domain: all
+  DomainTests:
+    build:
+      targets:
+        DomainTests: all

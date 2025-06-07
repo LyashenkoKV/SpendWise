@@ -80,5 +80,5 @@ public extension Transaction {
 }
 
 private extension Transaction.CSVField {
-    var index: Int { Self.allCases.firstIndex(of: self)! }
+    var index: Int { Self.allCases.firstIndex(of: self) ?? -1 }
 }

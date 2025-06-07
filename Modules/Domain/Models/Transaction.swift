@@ -18,6 +18,26 @@ public struct Transaction: Identifiable, Codable, Hashable {
     public let createdAt: Date?
     public let updatedAt: Date?
 
+    public init(
+        id: Int,
+        accountId: Int,
+        categoryId: Int,
+        amount: Decimal,
+        transactionDate: Date,
+        comment: String?,
+        createdAt: Date?,
+        updatedAt: Date?
+    ) {
+        self.id = id
+        self.accountId = accountId
+        self.categoryId = categoryId
+        self.amount = amount
+        self.transactionDate = transactionDate
+        self.comment = comment
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+    }
+
     private enum CodingKeys: String, CodingKey {
         case id,
              accountId,

@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "A6A82DA2-8AF7-49B5-A69B-1F46CA00993D",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:SpendWise.xcodeproj",
+        "identifier" : "919A24358227F6DDB8137AA8",
+        "name" : "DomainTests"
+      }
+    }
+  ],
+  "version" : 1
+}

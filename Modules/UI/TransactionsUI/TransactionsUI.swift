@@ -1,14 +1,14 @@
 //
-//  ContentView.swift
-//  SpendWise
+//  TransactionsUI.swift
+//  TransactionsUI
 //
 //  Created by Konstantin Lyashenko on 06.06.2025.
 //
 
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
+public struct TransactionUI: View {
+    public var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
@@ -16,9 +16,12 @@ struct ContentView: View {
             Text("Hello, world!")
         }
         .padding()
+        .font(.largeTitle)
     }
+
+    public init() {}
 }
 
 #Preview {
-    ContentView()
+    TransactionUI()
 }

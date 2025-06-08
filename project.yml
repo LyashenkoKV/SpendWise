@@ -1,0 +1,253 @@
+name: SpendWise
+
+options:
+  bundleIdPrefix: KV.Lyashenko.SpendWise
+  deploymentTarget:
+    iOS:
+      target: "18.0"
+      devices: [iphone, ipad]
+
+configs:
+  Debug: debug
+  Release: release
+
+settings:
+  base:
+    CODE_SIGN_STYLE: Automatic
+
+files:
+  - path: Modules/
+    group: Modules
+  - project.yml
+  - .swiftlint.yml
+
+targets:
+  Domain:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Modules/Domain/
+        group: Modules
+    dependencies:
+      - target: Common
+    settings:
+      PRODUCT_NAME: "Domain"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  DomainTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Tests/DomainTests/
+        group: Tests
+    dependencies:
+      - target: Domain
+    settings:
+      PRODUCT_NAME: "DomainTests"
+      PRODUCT_BUNDLE_IDENTIFIER: ${bundleIdPrefix}.DomainTests
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: "Tests/TestBundle-Info.plist"
+
+  Persistence:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Modules/Persistence/
+        group: Modules
+    dependencies:
+      - target: Domain
+      - target: Common
+    settings:
+      PRODUCT_NAME: "Persistence"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  Networking:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Modules/Networking/
+        group: Modules
+    dependencies:
+      - target: Domain
+      - target: Common
+    settings:
+      PRODUCT_NAME: "Networking"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  UseCases:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Modules/UseCases/
+        group: Modules
+    dependencies:
+      - target: Domain
+      - target: Persistence
+      - target: Networking
+      - target: Common
+    settings:
+      PRODUCT_NAME: "UseCases"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  Common:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Modules/Common/
+        group: Modules
+    settings:
+      PRODUCT_NAME: "Common"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  AccountsUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Modules/UI/AccountsUI/
+        group: Modules/UI
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Domain
+      - target: UseCases
+      - target: Common
+    settings:
+      PRODUCT_NAME: "AccountsUI"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  AnalysisUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Modules/UI/AnalysisUI/
+        group: Modules/UI
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Domain
+      - target: UseCases
+      - target: Common
+    settings:
+      PRODUCT_NAME: "AnalysisUI"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  CategoriesUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Modules/UI/CategoriesUI/
+        group: Modules/UI
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Domain
+      - target: UseCases
+      - target: Common
+    settings:
+      PRODUCT_NAME: "CategoriesUI"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  SettingsUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Modules/UI/SettingsUI/
+        group: Modules/UI
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Common
+    settings:
+      PRODUCT_NAME: "SettingsUI"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  TransactionsUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Modules/UI/TransactionsUI/
+        group: Modules/UI
+    group: UI
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Domain
+      - target: UseCases
+      - target: Common
+    settings:
+      PRODUCT_NAME: "TransactionsUI"
+      SWIFT_VERSION: "5.0"
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+
+  SpendWise:
+    type: application
+    platform: iOS
+    deploymentTarget: "18.0"
+    bundleId: KV.Lyashenko.SpendWise.SpendWise
+    sources:
+      - path: Modules/UI/AppEntry/
+        group: Modules/UI
+    excludes:
+          - Supporting Modules/UI/AppEntry/Info.plist
+    resources:
+      - Modules/UI/AppEntry/Resources/**
+    dependencies:
+      - target: Common
+      - target: Domain
+      - target: Persistence
+      - target: Networking
+      - target: UseCases
+      - target: TransactionsUI
+      - target: AccountsUI
+      - target: CategoriesUI
+      - target: SettingsUI
+      - target: AnalysisUI
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: 'KV.Lyashenko.SpendWise'
+      INFOPLIST_FILE: Modules/UI/AppEntry/Info.plist
+      PRODUCT_BUNDLE_IDENTIFIER: ${bundleIdPrefix}.SpendWise
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      UISupportedInterfaceOrientations:
+        - UIInterfaceOrientationPortrait
+    prebuildScripts:
+      - name: SwiftLint
+        script: |
+          if which swiftlint >/dev/null; then
+            swiftlint lint --config "${SRCROOT}/.swiftlint.yml"
+          else
+            echo "warning: SwiftLint not installed"
+          fi
+
+schemes:
+  SpendWiseApp:
+    build:
+      targets:
+        SpendWise: all
+  Domain:
+    build:
+      targets:
+        Domain: all
+  DomainTests:
+    build:
+      targets:
+        DomainTests: all

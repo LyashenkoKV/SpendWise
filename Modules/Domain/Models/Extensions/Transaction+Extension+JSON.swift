@@ -23,6 +23,20 @@ public extension Transaction {
         return encoder
     }()
 
+    var jsonObject: Any? {
+        guard let data = try? Transaction.jsonEncoder.encode(self),
+              let json = try? JSONSerialization.jsonObject(with: data, options: [])
+        else {
+            Logger.shared.log(
+                .error,
+                message: "Ошибка при преобразовании Transaction в JSON",
+                metadata: ["❌": "Transaction"]
+            )
+            return nil
+        }
+        return json
+    }
+
     static func parse(jsonObject: Any) -> Transaction? {
         guard JSONSerialization.isValidJSONObject(jsonObject),
               let data = try? JSONSerialization.data(withJSONObject: jsonObject),
@@ -36,19 +50,5 @@ public extension Transaction {
             return nil
         }
         return transaction
-    }
-
-    var jsonObject: Any? {
-        guard let data = try? Transaction.jsonEncoder.encode(self),
-              let json = try? JSONSerialization.jsonObject(with: data, options: [])
-        else {
-            Logger.shared.log(
-                .error,
-                message: "Ошибка при преобразовании Transaction в JSON",
-                metadata: ["❌": "Transaction"]
-            )
-            return nil
-        }
-        return json
     }
 }

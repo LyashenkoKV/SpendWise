@@ -206,7 +206,7 @@ targets:
     bundleId: KV.Lyashenko.SpendWise.SpendWise
     sources:
       - path: Modules/UI/AppEntry/
-        group: UI
+        group: Modules/UI
     excludes:
           - Supporting Modules/UI/AppEntry/Info.plist
     resources:

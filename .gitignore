@@ -22,7 +22,7 @@ DerivedData/
 # SwiftLint
 .swiftlint-cache
 
-# XcodeGen (ты не должен коммитить сгенерированный проект)
+# XcodeGen
 *.xcodeproj
 *.xcworkspace
 

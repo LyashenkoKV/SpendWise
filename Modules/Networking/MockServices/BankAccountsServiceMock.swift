@@ -28,4 +28,3 @@ public actor BankAccountsServiceMock {
         account
     }
 }
-

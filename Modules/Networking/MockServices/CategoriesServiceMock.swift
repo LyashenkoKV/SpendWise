@@ -22,4 +22,3 @@ public final class CategoriesServiceMock {
         try await getMockCategories().filter { $0.direction == direction }
     }
 }
-

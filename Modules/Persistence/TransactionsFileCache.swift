@@ -13,7 +13,7 @@ public actor TransactionsFileCache {
 
     // MARK: - Properties
 
-    private(set) var transactions: [Transaction]
+    private(set) var transactions: [TransactionModel]
     private let fileURL: URL
 
     // MARK: - Init
@@ -38,11 +38,11 @@ public actor TransactionsFileCache {
 
     // MARK: - Public API
 
-    public func all() -> [Transaction] {
+    public func all() -> [TransactionModel] {
         transactions
     }
 
-    public func add(_ transaction: Transaction) -> Bool {
+    public func add(_ transaction: TransactionModel) -> Bool {
         guard !transactions.contains(where: { $0.id == transaction.id }) else { return false }
         transactions.append(transaction)
         return true
@@ -90,11 +90,11 @@ public actor TransactionsFileCache {
                 throw TransactionsFileCacheError.invalidFormat
             }
 
-            var parsed: [Transaction] = []
+            var parsed: [TransactionModel] = []
             var errorCount = 0
 
             for (index, obj) in array.enumerated() {
-                if let trans = Transaction.parse(jsonObject: obj) {
+                if let trans = TransactionModel.parse(jsonObject: obj) {
                     parsed.append(trans)
                 } else {
                     Logger.shared.log(

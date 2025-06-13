@@ -10,8 +10,8 @@ import Domain
 
 public actor TransactionsServiceMock {
 
-    private var mockTransactions: [Transaction] = [
-        Transaction(
+    private var mockTransactions: [TransactionModel] = [
+        TransactionModel(
             id: 1,
             accountId: 1,
             categoryId: 1,
@@ -25,15 +25,15 @@ public actor TransactionsServiceMock {
 
     public init() {}
 
-    public func getTransactions(for accountId: Int, from start: Date, to end: Date) async throws -> [Transaction] {
+    public func getTransactions(for accountId: Int, from start: Date, to end: Date) async throws -> [TransactionModel] {
         mockTransactions.filter { $0.accountId == accountId && $0.transactionDate >= start && $0.transactionDate <= end }
     }
 
-    public func create(_ transaction: Transaction) async throws {
+    public func create(_ transaction: TransactionModel) async throws {
         mockTransactions.append(transaction)
     }
 
-    public func update(_ transaction: Transaction) async throws {
+    public func update(_ transaction: TransactionModel) async throws {
         if let index = mockTransactions.firstIndex(where: { $0.id == transaction.id }) {
             mockTransactions[index] = transaction
         }

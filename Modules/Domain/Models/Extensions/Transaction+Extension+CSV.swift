@@ -8,7 +8,7 @@
 import Foundation
 import Common
 
-public extension Transaction {
+public extension TransactionModel {
 
     enum CSVField: String, CaseIterable {
        case id,
@@ -69,16 +69,16 @@ public extension Transaction {
         )
     }
 
-    static func toCSV(_ transactions: [Transaction]) -> String {
+    static func toCSV(_ transactions: [TransactionModel]) -> String {
         ([csvHeader] + transactions.map { $0.csvRow }).joined(separator: "\n")
     }
 
-    static func fromCSV(_ csv: String) -> [Transaction] {
+    static func fromCSV(_ csv: String) -> [TransactionModel] {
         let lines = csv.components(separatedBy: .newlines).dropFirst()
-        return lines.compactMap { Transaction(csvRow: $0) }
+        return lines.compactMap { TransactionModel(csvRow: $0) }
     }
 }
 
-private extension Transaction.CSVField {
+private extension TransactionModel.CSVField {
     var index: Int { Self.allCases.firstIndex(of: self) ?? -1 }
 }

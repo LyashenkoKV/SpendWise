@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Transaction: Identifiable, Codable, Hashable {
+public struct TransactionModel: Identifiable, Codable, Hashable {
     public let id: Int
     public let accountId: Int
     public let categoryId: Int

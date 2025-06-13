@@ -11,7 +11,7 @@ import Foundation
 
 struct DomainTests {
     @Test func testTransactionJsonRoundtrip() throws {
-        let transaction = Transaction(
+        let transaction = TransactionModel(
             id: 1,
             accountId: 1,
             categoryId: 2,
@@ -26,7 +26,7 @@ struct DomainTests {
             #expect(false, "jsonObject вернул nil")
             return
         }
-        guard let parsed = Transaction.parse(jsonObject: jsonObject) else {
+        guard let parsed = TransactionModel.parse(jsonObject: jsonObject) else {
             #expect(false, "parse(jsonObject:) вернул nil")
             return
         }
@@ -46,7 +46,7 @@ struct DomainTests {
             "amount": "100",
             "transactionDate": "wrong date"
         ]
-        let result = Transaction.parse(jsonObject: bad)
+        let result = TransactionModel.parse(jsonObject: bad)
         #expect(result == nil)
     }
 }

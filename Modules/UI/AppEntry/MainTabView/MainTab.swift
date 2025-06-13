@@ -7,10 +7,6 @@
 
 import SwiftUI
 import Common
-import AccountsUI
-import TransactionsUI
-import CategoriesUI
-import SettingsUI
 
 enum MainTab: Int, CaseIterable, Hashable {
     case expenses, incomes, accounts, categories, settings
@@ -32,17 +28,6 @@ enum MainTab: Int, CaseIterable, Hashable {
         case .accounts:   return AppIcon.account
         case .categories: return AppIcon.categories
         case .settings:   return AppIcon.settings
-        }
-    }
-
-    @ViewBuilder
-    var content: some View {
-        switch self {
-        case .expenses: TransactionView()
-        case .incomes: TransactionView()
-        case .accounts: AccountsView()
-        case .categories: CategoriesView()
-        case .settings: SettingsView()
         }
     }
 }

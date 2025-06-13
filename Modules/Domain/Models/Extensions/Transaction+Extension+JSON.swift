@@ -8,7 +8,7 @@
 import Foundation
 import Common
 
-public extension Transaction {
+public extension TransactionModel {
 
     private static let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -24,7 +24,7 @@ public extension Transaction {
     }()
 
     var jsonObject: Any? {
-        guard let data = try? Transaction.jsonEncoder.encode(self),
+        guard let data = try? TransactionModel.jsonEncoder.encode(self),
               let json = try? JSONSerialization.jsonObject(with: data, options: [])
         else {
             Logger.shared.log(
@@ -37,10 +37,10 @@ public extension Transaction {
         return json
     }
 
-    static func parse(jsonObject: Any) -> Transaction? {
+    static func parse(jsonObject: Any) -> TransactionModel? {
         guard JSONSerialization.isValidJSONObject(jsonObject),
               let data = try? JSONSerialization.data(withJSONObject: jsonObject),
-              let transaction = try? jsonDecoder.decode(Transaction.self, from: data)
+              let transaction = try? jsonDecoder.decode(TransactionModel.self, from: data)
         else {
             Logger.shared.log(
                 .error,

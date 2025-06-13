@@ -8,9 +8,16 @@
 import Foundation
 import Common
 
-public enum Direction: String, Codable {
+public enum Direction: String, Codable, CaseIterable {
     case income
     case outcome
+
+    public var title: String {
+        switch self {
+        case .income: return "Доходы"
+        case .outcome: return "Расходы"
+        }
+    }
 }
 
 public struct ExpensesCategory: Identifiable, Codable {

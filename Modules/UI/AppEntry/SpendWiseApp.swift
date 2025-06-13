@@ -12,7 +12,7 @@ import TransactionsUI
 struct SpendWiseApp: App {
     var body: some Scene {
         WindowGroup {
-            TransactionUI()
+            MainTabView()
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TransactionUI: View {
+public struct TransactionView: View {
     public var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -23,5 +23,5 @@ public struct TransactionUI: View {
 }
 
 #Preview {
-    TransactionUI()
+    TransactionView()
 }

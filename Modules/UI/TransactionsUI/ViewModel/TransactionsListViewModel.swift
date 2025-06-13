@@ -28,7 +28,7 @@ public final class TransactionsListViewModel: ObservableObject {
 
     // MARK: - Private Properties
 
-    private let direction: Direction
+    let direction: Direction
     private let transactionsProvider: () async throws -> [TransactionModel]
     private let categoriesProvider: () async throws -> [ExpensesCategory]
 

@@ -32,63 +32,116 @@ public struct TransactionsListView: View {
     }
 
     public var body: some View {
-        Group {
-            switch viewModel.state {
-            case .loading:
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            case .error(let message):
-                VStack {
-                    Text(TransactionsListTexts.error)
-                    Text(message)
-                        .font(.caption)
-                        .foregroundStyle(Color.secondary)
-                    Button(TransactionsListTexts.retry) {
-                        Task { await viewModel.load() }
-                    }
-                    .buttonStyle(.bordered)
-                    .padding(.top, 8)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            case .empty:
-                Text(TransactionsListTexts.empty)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            case .loaded(let items, let total, let categories):
-                VStack(spacing: 0) {
+        ZStack(alignment: .bottomLeading) {
+            Color.bgSecondary.ignoresSafeArea()
+            VStack(alignment: .leading) {
+                Text(
+                    viewModel.direction == .income ? TransactionsListTexts.incTitle : TransactionsListTexts.expTitle)
+                .font(.largeTitle.bold())
+                .padding(.top, 24)
+                .padding(.horizontal, 16)
+
+                if case let .loaded(_, total, _) = viewModel.state {
                     HStack {
                         Text(TransactionsListTexts.total)
                             .font(.headline)
                         Spacer()
                         Text("\(total.formattedGrouped) ₽")
                             .font(.headline.bold())
+                            .foregroundStyle(Color.secondaryText)
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, 16)
                     .padding(.vertical, 12)
-                    .background(Color.bgSecondary)
+                    .background(Color.bgPrimary)
                     .clipShape(
                         RoundedRectangle(
                             cornerRadius: Constants.cornerRadius10,
                             style: .continuous
                         )
                     )
+                    .padding(.horizontal, 16)
+                    .padding(.top, 16)
+                }
 
-                    Text(TransactionsListTexts.title.uppercased())
-                        .font(.caption)
-                        .padding(.horizontal)
-                        .padding(.top)
+                Text(TransactionsListTexts.operations.uppercased())
+                    .font(.caption)
+                    .foregroundStyle(Color.secondaryText)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 8)
 
-                    ScrollView {
-                        LazyVStack(spacing: 0) {
-                            ForEach(items) { transaction in
-                                let category = categories.first(where: { $0.id == transaction.categoryId })
-                                TransactionCell(transaction: transaction, category: category)
-                                Divider()
+                Group {
+                    switch viewModel.state {
+                    case .loading:
+                        ProgressView()
+                            .frame(
+                                maxWidth: .infinity,
+                                maxHeight: .infinity
+                            )
+                    case .error(let message):
+                        VStack {
+                            Text(TransactionsListTexts.error)
+                            Text(message)
+                                .font(.caption)
+                                .foregroundStyle(Color.bgPrimary)
+                            Button(TransactionsListTexts.retry) {
+                                Task { await viewModel.load() }
                             }
+                            .buttonStyle(.bordered)
+                            .padding(.top, 8)
                         }
-                        .padding(.horizontal)
+                        .frame(
+                            maxWidth: .infinity,
+                            maxHeight: .infinity
+                        )
+                    case .empty:
+                        Text(TransactionsListTexts.empty)
+                            .frame(
+                                maxWidth: .infinity,
+                                maxHeight: .infinity
+                            )
+                    case .loaded(let items, let total, let categories):
+                        ScrollView {
+                            LazyVStack(spacing: 0) {
+                                ForEach(items) { transaction in
+                                    let category = categories.first(
+                                        where: { $0.id == transaction.categoryId
+                                        })
+                                    TransactionCell(
+                                        transaction: transaction,
+                                        category: category)
+                                    .background(Color.bgPrimary)
+                                    .clipShape(
+                                        RoundedRectangle(
+                                            cornerRadius: Constants.cornerRadius10,
+                                            style: .continuous
+                                        )
+                                    )
+                                    Rectangle()
+                                        .fill(Color.bgSecondary)
+                                        .frame(height: 1)
+                                        .padding(.leading, 54)
+                                        .padding(.trailing, 16)
+                                }
+                                Spacer(minLength: 60)
+                            }
+                            .padding(.horizontal)
+                        }
                     }
                 }
+                Spacer()
             }
+            Button(action: {
+                // TODO: Add action
+            }) {
+                Image(systemName: "plus")
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(width: 56, height: 56)
+                    .background(Color.accentAppColor)
+                    .clipShape(Circle())
+                    .shadow(radius: 10)
+            }
+            .padding(24)
         }
         .onAppear {
             if case .loading = viewModel.state {

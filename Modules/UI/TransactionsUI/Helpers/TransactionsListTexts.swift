@@ -8,8 +8,10 @@
 import Foundation
 
 enum TransactionsListTexts {
+    static let expTitle = "Расходы сегодня"
+    static let incTitle = "Доходы сегодня"
     static let total = "Всего"
-    static let title = "Операции"
+    static let operations = "Операции"
     static let empty = "Нет операций"
     static let error = "Ошибка загрузки"
     static let retry = "Повторить"

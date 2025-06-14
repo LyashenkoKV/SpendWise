@@ -32,8 +32,9 @@ public struct TransactionsListView: View {
     }
 
     public var body: some View {
-        ZStack(alignment: .bottomLeading) {
+        ZStack(alignment: .bottomTrailing) {
             Color.bgSecondary.ignoresSafeArea()
+
             VStack(alignment: .leading) {
                 Text(
                     viewModel.direction == .income ? TransactionsListTexts.incTitle : TransactionsListTexts.expTitle)
@@ -99,7 +100,7 @@ public struct TransactionsListView: View {
                                 maxWidth: .infinity,
                                 maxHeight: .infinity
                             )
-                    case .loaded(let items, let total, let categories):
+                    case .loaded(let items, _, let categories):
                         ScrollView {
                             LazyVStack(spacing: 0) {
                                 ForEach(items) { transaction in
@@ -128,20 +129,20 @@ public struct TransactionsListView: View {
                         }
                     }
                 }
-                Spacer()
+                Spacer(minLength: 0)
             }
-            Button(action: {
-                // TODO: Add action
-            }) {
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            Button(action: { /* Действие добавления */ }) {
                 Image(systemName: "plus")
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.white)
                     .frame(width: 56, height: 56)
                     .background(Color.accentAppColor)
                     .clipShape(Circle())
-                    .shadow(radius: 10)
             }
-            .padding(24)
+            .padding(.trailing, 24)
+            .padding(.bottom, 24)
         }
         .onAppear {
             if case .loading = viewModel.state {
@@ -182,6 +183,106 @@ fileprivate extension Decimal {
                     ),
                     TransactionModel(
                         id: 2,
+                        accountId: 1,
+                        categoryId: 2,
+                        amount: -3000 as Decimal,
+                        transactionDate: .now,
+                        comment: "Ужин",
+                        createdAt: .now,
+                        updatedAt: .now
+                    ),
+                    TransactionModel(
+                        id: 3,
+                        accountId: 1,
+                        categoryId: 2,
+                        amount: -1500 as Decimal,
+                        transactionDate: .now,
+                        comment: "Ланч",
+                        createdAt: .now,
+                        updatedAt: .now
+                    ),
+                    TransactionModel(
+                        id: 4,
+                        accountId: 1,
+                        categoryId: 2,
+                        amount: -3000 as Decimal,
+                        transactionDate: .now,
+                        comment: "Ужин",
+                        createdAt: .now,
+                        updatedAt: .now
+                    ),
+                    TransactionModel(
+                        id: 5,
+                        accountId: 1,
+                        categoryId: 2,
+                        amount: -1500 as Decimal,
+                        transactionDate: .now,
+                        comment: "Ланч",
+                        createdAt: .now,
+                        updatedAt: .now
+                    ),
+                    TransactionModel(
+                        id: 6,
+                        accountId: 1,
+                        categoryId: 2,
+                        amount: -3000 as Decimal,
+                        transactionDate: .now,
+                        comment: "Ужин",
+                        createdAt: .now,
+                        updatedAt: .now
+                    ),
+                    TransactionModel(
+                        id: 7,
+                        accountId: 1,
+                        categoryId: 2,
+                        amount: -1500 as Decimal,
+                        transactionDate: .now,
+                        comment: "Ланч",
+                        createdAt: .now,
+                        updatedAt: .now
+                    ),
+                    TransactionModel(
+                        id: 8,
+                        accountId: 1,
+                        categoryId: 2,
+                        amount: -3000 as Decimal,
+                        transactionDate: .now,
+                        comment: "Ужин",
+                        createdAt: .now,
+                        updatedAt: .now
+                    ),
+                    TransactionModel(
+                        id: 9,
+                        accountId: 1,
+                        categoryId: 2,
+                        amount: -1500 as Decimal,
+                        transactionDate: .now,
+                        comment: "Ланч",
+                        createdAt: .now,
+                        updatedAt: .now
+                    ),
+                    TransactionModel(
+                        id: 10,
+                        accountId: 1,
+                        categoryId: 2,
+                        amount: -3000 as Decimal,
+                        transactionDate: .now,
+                        comment: "Ужин",
+                        createdAt: .now,
+                        updatedAt: .now
+                    ),
+                    TransactionModel(
+                        id: 11,
+                        accountId: 1,
+                        categoryId: 2,
+                        amount: -1500 as Decimal,
+                        transactionDate: .now,
+                        comment: "Ланч",
+                        createdAt: .now,
+                        updatedAt: .now
+                    ),
+                    TransactionModel(
+                        id: 12,
                         accountId: 1,
                         categoryId: 2,
                         amount: -3000 as Decimal,

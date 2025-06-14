@@ -13,24 +13,34 @@ struct TransactionCell: View {
     let category: ExpensesCategory?
 
     var body: some View {
-        HStack(spacing: 12) {
-            if let emoji = category?.emoji {
-                Text(String(emoji))
-                    .font(.title3)
-            }
-            VStack(alignment: .leading) {
-                Text(category?.name ?? "-")
-                    .font(.body.bold())
-                if let comment = transaction.comment, !comment.isEmpty {
-                    Text(comment)
-                        .font(.caption)
-                        .foregroundStyle(Color.secondaryText)
+        HStack(alignment: .center, spacing: 12) {
+            ZStack{
+                Circle()
+                    .fill(Color.subAppColor)
+                    .frame(width: 22)
+                if let emoji = category?.emoji {
+                    Text(String(emoji))
+                        .font(.system(size: 14.5))
                 }
+            }
+            .padding(.leading, 16)
+
+            VStack(alignment: .leading, spacing: 2) {
+                    Text(category?.name ?? "-")
+                        .font(.body.bold())
+                    if let comment = transaction.comment, !comment.isEmpty {
+                        Text(comment)
+                            .font(.caption)
+                            .foregroundStyle(Color.secondaryText)
+                    }
             }
             Spacer()
             Text("\(transaction.amount, format: .number.precision(.fractionLength(0))) ₽")
                 .font(.body.bold())
+            Image(systemName: "chevron.right")
+                .foregroundStyle(Color.secondaryText)
         }
+        .padding(.trailing, 19)
         .padding(.vertical, 8)
     }
 }

@@ -34,6 +34,9 @@ public struct TransactionsListView: View {
     public var body: some View {
         NavigationStack {
             content
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    Spacer().frame(height: 16)
+                }
                 .navigationTitle(
                     viewModel.direction == .income ?
                     TransactionsListTexts.incTitle :
@@ -49,7 +52,6 @@ public struct TransactionsListView: View {
                         }
                     }
                 }
-                .background(Color.bgSecondary)
                 .overlay(
                     Button(action: { // TODO: - переход на экран "Создания расхода"
                     }) {
@@ -60,12 +62,12 @@ public struct TransactionsListView: View {
                             .background(Color.accentAppColor)
                             .clipShape(Circle())
                     }
-                    .padding(.trailing, 24)
-                    .padding(.bottom, 24)
-                    , alignment: .bottomTrailing
+                        .padding(.trailing, 24)
+                        .padding(.bottom, 24),
+                    alignment: .bottomTrailing
                 )
-
         }
+        .background(Color.bgSecondary)
         .onAppear {
             if case .loading = viewModel.state {
                 Task { await viewModel.load() }
@@ -105,7 +107,7 @@ public struct TransactionsListView: View {
     }
 }
 
-fileprivate struct SectionedTransactionList: View {
+private struct SectionedTransactionList: View {
     let items: [TransactionModel]
     let total: Decimal
     let categories: [ExpensesCategory]
@@ -115,13 +117,13 @@ fileprivate struct SectionedTransactionList: View {
             Section {
                 HStack {
                     Text(TransactionsListTexts.total)
-                        .font(.headline)
+                        .font(.body)
                     Spacer()
                     Text("\(total.formattedGrouped) ₽")
-                        .font(.headline.bold())
+                        .font(.body)
                         .foregroundStyle(Color.secondaryText)
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, 0)
                 .listRowBackground(Color.bgPrimary)
             }
 
@@ -130,10 +132,25 @@ fileprivate struct SectionedTransactionList: View {
                 .font(.caption)
                 .foregroundStyle(Color.secondaryText)
             ) {
-                ForEach(items) { transaction in
+                ForEach(items.indices, id: \.self) { index in
+                    let transaction = items[index]
+                    let isLast = index == items.count - 1
                     let category = categories.first { $0.id == transaction.categoryId }
-                    TransactionCell(transaction: transaction, category: category)
-                        .listRowBackground(Color.bgPrimary)
+                    TransactionCell(
+                        transaction: transaction,
+                        category: category,
+                        isLast: isLast
+                    )
+                    .listRowBackground(Color.bgPrimary)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(
+                        EdgeInsets(
+                            top: 0,
+                            leading: 0,
+                            bottom: 0,
+                            trailing: 0
+                        )
+                    )
                 }
             }
         }
@@ -167,7 +184,7 @@ fileprivate extension Decimal {
                         categoryId: 2,
                         amount: -1500 as Decimal,
                         transactionDate: .now,
-                        comment: "Ланч",
+                        comment: nil,
                         createdAt: .now,
                         updatedAt: .now
                     ),

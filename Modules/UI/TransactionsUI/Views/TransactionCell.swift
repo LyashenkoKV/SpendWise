@@ -37,6 +37,7 @@ struct TransactionCell: View {
             Spacer()
             Text("\(transaction.amount, format: .number.precision(.fractionLength(0))) ₽")
                 .font(.body.bold())
+                .foregroundStyle(Color.secondaryText)
             Image(systemName: "chevron.right")
                 .foregroundStyle(Color.secondaryText)
         }
